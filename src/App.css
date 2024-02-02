@@ -1,0 +1,36 @@
+.app-main {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+.header-main {
+  height: 50px;
+}
+.header-menu {
+  display: flex;
+}
+.footer-main {
+  height: 50px;
+}
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+}
+.card {
+  width: 400px;
+  margin: 8px;
+  /* height: 530px; */
+}
+.card-badge {
+  margin: 8px;
+}
+.card-image {
+  width: 400px !important;
+  height: 300px !important;
+  object-fit: cover;
+}
+.add-button {
+  padding: 5px !important;
+  height: auto;
+}
