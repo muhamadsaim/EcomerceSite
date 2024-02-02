@@ -10,7 +10,7 @@ export default function AppCart() {
         onClick={() => {
           setCartDrawerOpen(true);
         }}
-        count={7}
+        count={2}
         className="cart-icon"
       >
         <ShoppingCartOutlined />
