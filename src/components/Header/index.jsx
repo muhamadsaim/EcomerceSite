@@ -1,6 +1,8 @@
-import { Menu } from "antd";
-import { HomeFilled } from "@ant-design/icons";
+import { Badge, Menu } from "antd";
+import { HomeFilled, ShoppingCartOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import Typography from "antd/es/typography/Typography";
+import AppCart from "../AppCart";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -10,6 +12,7 @@ export const Header = () => {
   return (
     <div className="header-main">
       <Menu
+        className="header-menu"
         onClick={onMenuClick}
         mode="horizontal"
         items={[
@@ -67,6 +70,7 @@ export const Header = () => {
           },
         ]}
       />
+      <AppCart />
     </div>
   );
 };

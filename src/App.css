@@ -6,9 +6,16 @@
 }
 .header-main {
   height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cart-icon {
+  font-size: 25px;
+  margin-right: 30px;
 }
 .header-menu {
-  display: flex;
+  width: 300px;
 }
 .footer-main {
   height: 50px;
