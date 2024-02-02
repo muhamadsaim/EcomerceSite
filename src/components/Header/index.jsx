@@ -26,12 +26,12 @@ export const Header = () => {
                 key: "mens-shirts",
               },
               {
-                label: "Men's Watches",
-                key: "mens-watches",
-              },
-              {
                 label: "Men's Shoes",
                 key: "mens-shoes",
+              },
+              {
+                label: "Men's Watches",
+                key: "mens-watches",
               },
             ],
           },
@@ -40,22 +40,30 @@ export const Header = () => {
             key: "women",
             children: [
               {
-                label: "Women's Shirts",
-                key: "womens-shirts",
+                label: "Women's Dresses",
+                key: "womens-dresses",
+              },
+              {
+                label: "Women's Shoes",
+                key: "womens-shoes",
               },
               {
                 label: "Women's Watches",
                 key: "womens-watches",
               },
               {
-                label: "Women's Shoes",
-                key: "womens-shoes",
+                label: "Women's Bags",
+                key: "womens-bags",
+              },
+              {
+                label: "Women's Jewellery",
+                key: "womens-jewellery",
               },
             ],
           },
           {
-            label: "Acessories",
-            key: "acessories",
+            label: "Fragrances",
+            key: "fragrances",
           },
         ]}
       />

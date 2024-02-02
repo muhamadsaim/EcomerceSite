@@ -1,16 +1,26 @@
 /* eslint-disable react/jsx-key */
 import { useState, useEffect } from "react";
-import { getAllProducts } from "../Api";
-import { Badge, Card, Image, List, Rate, Typography } from "antd";
+import { getAllProducts, getProductByCategory } from "../Api";
+import { Badge, Card, Image, List, Rate, Spin, Typography } from "antd";
 import AddtoCartButton from "../AddToCartButton";
+import { useParams } from "react-router-dom";
 
 export const Products = () => {
+  const param = useParams();
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
-    getAllProducts().then((res) => {
+    setLoading(true);
+
+    (param.catrgoryId
+      ? getProductByCategory(param.catrgoryId)
+      : getAllProducts()
+    ).then((res) => {
       setItems(res.products);
+      setLoading(false);
     });
-  }, []);
+  }, [param]);
+  if (loading) return <Spin spinning />;
   return (
     <div>
       <List
