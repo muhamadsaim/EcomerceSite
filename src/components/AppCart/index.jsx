@@ -1,8 +1,15 @@
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { Badge, Drawer, Table } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getCart } from "../Api";
 export default function AppCart() {
   const [CartDrawerOpen, setCartDrawerOpen] = useState(false);
+  const [cartItems, setCartItems] = useState();
+  useEffect(() => {
+    getCart().then((res) => {
+      setCartItems(res.products);
+    });
+  }, []);
 
   return (
     <div>
@@ -25,12 +32,15 @@ export default function AppCart() {
         <Table
           columns={[
             {
-              title: "title",
+              title: "Title",
               dataIndex: "title",
             },
             {
               title: "Price",
               dataIndex: "price",
+              render: (value) => {
+                return <span>${value}</span>;
+              },
             },
             {
               title: "Quantity",
@@ -39,8 +49,12 @@ export default function AppCart() {
             {
               title: "Total",
               dataIndex: "total",
+              render: (value) => {
+                return <span>${value}</span>;
+              },
             },
           ]}
+          dataSource={cartItems}
         />
       </Drawer>
     </div>
