@@ -28,6 +28,7 @@ export default function AppCart() {
         }}
         open={CartDrawerOpen}
         title="Your Shoppings"
+        contentWrapperStyle={{ width: 500 }}
       >
         <Table
           columns={[
@@ -45,10 +46,27 @@ export default function AppCart() {
             {
               title: "Quantity",
               dataIndex: "quantity",
-              render: (value) => {
-                return <InputNumber defaultValue={value} min={0}></InputNumber>;
+              render: (value, record) => {
+                return (
+                  <InputNumber
+                    defaultValue={value}
+                    min={0}
+                    onChange={(newValue) => {
+                      setCartItems((prevCartItems) =>
+                        prevCartItems.map((cart) => {
+                          if (record.id === cart.id) {
+                            cart.quantity = newValue;
+                            cart.total = cart.price * newValue;
+                          }
+                          return cart;
+                        })
+                      );
+                    }}
+                  />
+                );
               },
             },
+
             {
               title: "Total",
               dataIndex: "total",
@@ -58,6 +76,12 @@ export default function AppCart() {
             },
           ]}
           dataSource={cartItems}
+          summary={(data) => {
+            const total = data.reduce((pre, current) => {
+              return pre + current.total;
+            }, 0);
+            return <span>Total: ${total}</span>;
+          }}
         />
       </Drawer>
     </div>
