@@ -1,5 +1,5 @@
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import { Badge, Drawer, Table } from "antd";
+import { Badge, Drawer, Table, InputNumber } from "antd";
 import { useEffect, useState } from "react";
 import { getCart } from "../Api";
 export default function AppCart() {
@@ -45,6 +45,9 @@ export default function AppCart() {
             {
               title: "Quantity",
               dataIndex: "quantity",
+              render: (value) => {
+                return <InputNumber defaultValue={value} min={0}></InputNumber>;
+              },
             },
             {
               title: "Total",
