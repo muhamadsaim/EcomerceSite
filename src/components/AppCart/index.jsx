@@ -1,7 +1,7 @@
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { Badge, Drawer, Table, InputNumber } from "antd";
 import { useEffect, useState } from "react";
-import { getCart } from "../Api";
+import { getCart } from "../../Api";
 export default function AppCart() {
   const [CartDrawerOpen, setCartDrawerOpen] = useState(false);
   const [cartItems, setCartItems] = useState();

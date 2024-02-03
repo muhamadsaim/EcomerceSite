@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 import { useState, useEffect } from "react";
-import { getAllProducts, getProductByCategory } from "../Api";
+import { getAllProducts, getProductByCategory } from "../../Api";
 import { Badge, Card, Image, List, Rate, Spin, Typography } from "antd";
 import AddtoCartButton from "../AddToCartButton";
 import { useParams } from "react-router-dom";
