@@ -1,15 +1,34 @@
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import { Badge, Drawer, Table, InputNumber } from "antd";
+import {
+  Badge,
+  Drawer,
+  Table,
+  InputNumber,
+  Button,
+  Form,
+  Input,
+  Checkbox,
+  Typography,
+  message,
+} from "antd";
 import { useEffect, useState } from "react";
 import { getCart } from "../../Api";
 export default function AppCart() {
   const [CartDrawerOpen, setCartDrawerOpen] = useState(false);
+  const [checkOutDrawerOpen, setCheckOutDrawerOpen] = useState(false);
   const [cartItems, setCartItems] = useState();
+  const [totalOfCart, setTotalOfCart] = useState();
   useEffect(() => {
     getCart().then((res) => {
       setCartItems(res.products);
     });
   }, []);
+  const onConfirmOrder = (values) => {
+    console.log({ values });
+    setCartDrawerOpen(false);
+    setCheckOutDrawerOpen(false);
+    message.success("Your Order has Been Placed");
+  };
 
   return (
     <div>
@@ -17,7 +36,7 @@ export default function AppCart() {
         onClick={() => {
           setCartDrawerOpen(true);
         }}
-        count={2}
+        count={cartItems.length}
         className="cart-icon"
       >
         <ShoppingCartOutlined />
@@ -31,6 +50,7 @@ export default function AppCart() {
         contentWrapperStyle={{ width: 500 }}
       >
         <Table
+          pagination={false}
           columns={[
             {
               title: "Title",
@@ -77,12 +97,52 @@ export default function AppCart() {
           ]}
           dataSource={cartItems}
           summary={(data) => {
-            const total = data.reduce((pre, current) => {
-              return pre + current.total;
-            }, 0);
-            return <span>Total: ${total}</span>;
+            setTotalOfCart(
+              data.reduce((pre, current) => {
+                return pre + current.total;
+              }, 0)
+            );
           }}
         />
+        <span className="total-cart">Total: ${totalOfCart}</span>
+        <Button type="primary" onClick={() => setCheckOutDrawerOpen(true)}>
+          Click here To Checkout
+        </Button>
+      </Drawer>
+      <Drawer
+        onClose={() => {
+          setCheckOutDrawerOpen(false);
+        }}
+        open={checkOutDrawerOpen}
+        title="CheckOut Item List"
+      >
+        <Form onFinish={onConfirmOrder}>
+          <Form.Item required label="Full Name" name="full_name">
+            <Input placeholder="Enter Your Full name" />
+          </Form.Item>
+          <Form.Item required label="Email" name="email">
+            <Input placeholder="Enter your email address here" />
+          </Form.Item>
+          <Form.Item required label="Phone" name="phone">
+            <Input placeholder="Enter your phone Number here" />
+          </Form.Item>
+          <Form.Item required label="Address" name="address">
+            <Input placeholder="Enter your current address here" />
+          </Form.Item>
+          <Form.Item>
+            <Checkbox defaultChecked disabled>
+              Cash On Delievery
+            </Checkbox>
+          </Form.Item>
+          <Form.Item>
+            <Typography.Paragraph type="secondary">
+              Other Options Availabe Soon
+            </Typography.Paragraph>
+          </Form.Item>
+          <Button type="primary" htmlType="submit">
+            Confirm Order
+          </Button>
+        </Form>
       </Drawer>
     </div>
   );

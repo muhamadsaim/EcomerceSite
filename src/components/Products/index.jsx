@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import { useState, useEffect } from "react";
 import { getAllProducts, getProductByCategory } from "../../Api";
-import { Badge, Card, Image, List, Rate, Spin, Typography } from "antd";
+import { Badge, Card, Image, List, Rate, Typography, Select } from "antd";
 import AddtoCartButton from "../AddToCartButton";
 import { useParams } from "react-router-dom";
 
@@ -9,6 +9,8 @@ export const Products = () => {
   const param = useParams();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [sortOrder, setSortOrder] = useState("az");
+
   useEffect(() => {
     setLoading(true);
 
@@ -20,16 +22,71 @@ export const Products = () => {
       setLoading(false);
     });
   }, [param]);
-  if (loading) return <Spin spinning />;
+  //   if (loading) return <Spin spinning />;
+  const getSortedItems = () => {
+    const sortedItems = [...items];
+    sortedItems.sort((a, b) => {
+      const aLowerCaseTitle = a.title.toLowerCase();
+      const bLowerCaseTitle = b.title.toLowerCase();
+
+      if (sortOrder === "az") {
+        return aLowerCaseTitle > bLowerCaseTitle
+          ? 1
+          : aLowerCaseTitle === bLowerCaseTitle
+          ? 0
+          : -1;
+      } else if (sortOrder === "za") {
+        return aLowerCaseTitle < bLowerCaseTitle
+          ? 1
+          : aLowerCaseTitle === bLowerCaseTitle
+          ? 0
+          : -1;
+      } else if (sortOrder === "lowHigh") {
+        return a.price > b.price ? 1 : a.price === b.price ? 0 : -1;
+      } else if (sortOrder === "highLow") {
+        return a.price < b.price ? 1 : a.price === b.price ? 0 : -1;
+      }
+    });
+    return sortedItems;
+  };
+
   return (
-    <div>
+    <div className="product-main-div">
+      <div>
+        <Typography.Text>View Items Sorted By: </Typography.Text>
+        <Select
+          onChange={(value) => {
+            setSortOrder(value);
+          }}
+          defaultValue={"az"}
+          options={[
+            {
+              label: "Alphabetically a-z",
+              value: "az",
+            },
+            {
+              label: "Alphabetically z-a",
+              value: "za",
+            },
+            {
+              label: "Price Low to High",
+              value: "lowHigh",
+            },
+            {
+              label: "Price High to Low",
+              value: "highLow",
+            },
+          ]}
+        ></Select>
+      </div>
       <List
+        loading={loading}
         grid={{ Column: 3 }}
         renderItem={(product, index) => {
           return (
             <Badge.Ribbon
               className="card-badge"
-              text={product.discountPercentage}
+              text={`${product.discountPercentage}% OFF`}
               color="pink"
             >
               <Card
@@ -70,7 +127,7 @@ export const Products = () => {
             </Badge.Ribbon>
           );
         }}
-        dataSource={items}
+        dataSource={getSortedItems()}
       ></List>
     </div>
   );
