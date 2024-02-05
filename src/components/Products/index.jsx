@@ -29,22 +29,26 @@ export const Products = () => {
       const aLowerCaseTitle = a.title.toLowerCase();
       const bLowerCaseTitle = b.title.toLowerCase();
 
-      if (sortOrder === "az") {
-        return aLowerCaseTitle > bLowerCaseTitle
-          ? 1
-          : aLowerCaseTitle === bLowerCaseTitle
-          ? 0
-          : -1;
-      } else if (sortOrder === "za") {
-        return aLowerCaseTitle < bLowerCaseTitle
-          ? 1
-          : aLowerCaseTitle === bLowerCaseTitle
-          ? 0
-          : -1;
-      } else if (sortOrder === "lowHigh") {
-        return a.price > b.price ? 1 : a.price === b.price ? 0 : -1;
-      } else if (sortOrder === "highLow") {
-        return a.price < b.price ? 1 : a.price === b.price ? 0 : -1;
+      switch (sortOrder) {
+        case "az":
+          return aLowerCaseTitle > bLowerCaseTitle
+            ? 1
+            : aLowerCaseTitle === bLowerCaseTitle
+            ? 0
+            : -1;
+        case "za":
+          return aLowerCaseTitle < bLowerCaseTitle
+            ? 1
+            : aLowerCaseTitle === bLowerCaseTitle
+            ? 0
+            : -1;
+        case "lowHigh":
+          return a.price > b.price ? 1 : a.price === b.price ? 0 : -1;
+        case "highLow":
+          return a.price < b.price ? 1 : a.price === b.price ? 0 : -1;
+        default:
+          // Handle default case or throw an error if needed
+          break;
       }
     });
     return sortedItems;

@@ -117,16 +117,52 @@ export default function AppCart() {
         title="CheckOut Item List"
       >
         <Form onFinish={onConfirmOrder}>
-          <Form.Item required label="Full Name" name="full_name">
+          <Form.Item
+            rules={[
+              {
+                required: true,
+                message: "Please enter your full name",
+              },
+            ]}
+            label="Full Name"
+            name="full_name"
+          >
             <Input placeholder="Enter Your Full name" />
           </Form.Item>
-          <Form.Item required label="Email" name="email">
+          <Form.Item
+            rules={[
+              {
+                required: true,
+                message: "Please enter your email",
+              },
+            ]}
+            label="Email"
+            name="email"
+          >
             <Input placeholder="Enter your email address here" />
           </Form.Item>
-          <Form.Item required label="Phone" name="phone">
+          <Form.Item
+            rules={[
+              {
+                required: true,
+                message: "Please enter your phone number",
+              },
+            ]}
+            label="Phone"
+            name="phone"
+          >
             <Input placeholder="Enter your phone Number here" />
           </Form.Item>
-          <Form.Item required label="Address" name="address">
+          <Form.Item
+            rules={[
+              {
+                required: true,
+                message: "Please enter your address",
+              },
+            ]}
+            label="Address"
+            name="address"
+          >
             <Input placeholder="Enter your current address here" />
           </Form.Item>
           <Form.Item>
